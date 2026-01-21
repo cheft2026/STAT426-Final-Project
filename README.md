@@ -23,11 +23,11 @@ Quadratic Discriminant Analysis (QDA) is similar to LDA in that it reduces the d
 	
   Above is the total test accuracies of each of the models. Nonlinear SVM trained on the PCA data scored the highest, whereas QDA trained on the PCA data scored the lowest. In fact, it appears both versions of the SVM are more favorable when using the PCA data. 
 
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig1.png?raw=true)
+![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig3.png?raw=true)
 
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig1.png?raw=true)
+![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig4.png?raw=true)
 
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig1.png?raw=true)
+![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig5.png?raw=true)
 
 The tables above show the individual breakdowns of the testing accuracies for each class. The easiest to predict classes for each model are class 1 (Trouser), class 8 (Bag) and class 9 (Ankle Boot). All of these classes scored above 90% for most models. On average, class 6 has the lowest accuracy at approximately 51.7%. This follows from the confusion matrix that was made with the decision trees, which showed that class 6 was most likely to be classified as class 0. Since class 6 is Shirts and class 0 is Tshirts/Tops, it would make sense that the models would struggle between differentiating a “Shirt” and a “Tshirt/Top”. This could be a result from the PCA data reducing dimensions, possibly eliminating the features that made the two classes more distinguishable. 
 Of the models, Nonlinear SVMs perform the best overall. While some models outperform Nonlinear SVMs for some classes, Nonlinear SVMs tend to be consistently more accurate. Random Forests can more accurately classify class 0 and class 9 than Nonlinear SVMs, but Nonlinear SVMs are more accurate for the rest. LDA has the highest testing accuracy for class 6 of all the models (51.7%), but compared to Nonlinear SVMs it performs significantly worse, especially when classifying class 2 (another class which was commonly misclassified). The training set given is highly variable and, even with applying PCA, still has 69 features. As such, opting for a training model that succeeds with highly variable data in higher dimensions is needed. Thus, Nonlinear SVMs would be the most appropriate choice, which the data shows.
