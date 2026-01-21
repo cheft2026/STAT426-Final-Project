@@ -19,7 +19,7 @@ Quadratic Discriminant Analysis (QDA) is similar to LDA in that it reduces the d
 
 ### Comparison of Non-DL Models
 
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig1.png?raw=true)
+![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig2.png?raw=true)
 	
   Above is the total test accuracies of each of the models. Nonlinear SVM trained on the PCA data scored the highest, whereas QDA trained on the PCA data scored the lowest. In fact, it appears both versions of the SVM are more favorable when using the PCA data. 
 
