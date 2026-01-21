@@ -1,4 +1,5 @@
 # STAT426-Final-Project
+Below is the write-up portion of the final project. The purpose of the write-up is to explain the methods used in the code and to analyze the results to find the best method of classification. Addtitionally, the report was to practice presenting statistical data in a professional setting.
 ### KNN Classification	
 K-Nearest Neighbors, or KNN, is the first classification method we will use. KNN is a classification method in which an observation is classified based on the majority class of the K nearest observations. We train the model using both the flattened data and the PCA data. Before we can start training the data, we need to find the best K value as to not overfit or undefit the data. This is done through Cross Validation, using the Python command skm.GridSearchCV which employs a k-fold Cross Validation. We will be using a 5-fold Cross Validation due to the training sets having 1000 observations, thus it will be computationally advantageous to divide those up into 5 groups. Of the K values tested, K = 1 ended up being the best value for both training sets, meaning the decision boundary needs to be highly flexible to fit the data. Thus, we can set n_neighbors = 1 and use the KNeighborsClassifier() function on the training sets. Upon using knn.predict() on the testing sets and using the function acc_table to find the accuracies, the total accuracy for the flattened data and the PCA data was 75.06% and 75.59% respectively. While the increased accuracy of the PCA data is almost negligible, the reduced dimensions of the PCA data allows for a quicker computation, which will be important for more intensive models. Since we know the PCA data will be more accurate, we will use it from now on when testing the other models.
 
@@ -9,7 +10,7 @@ In situations where the clusters of data are unable to be linearly separated, a 
 ### Random Forest
 We choose to use Random Forests over other Decision Tree models because of its ability to deprioritize strong predictors, thus decorrelating the predictors. This is useful as it will reduce the variance of our dataset. We can use the RandomForestClassifier() function in python to do this. For our forest, we will generate B = 500 trees which will be sufficiently large enough as to not underfit our data. The maximum number of features (m) for each split will be the square root of the number of features (p) of the PCA training set, which is the standard for Random Forests. Since there are no hyperparameters, we do not need to perform a Cross Validation. In the code, we can generate the OOB score and the confusion matrix to further analyze how well this method performs. Upon training the model and testing it using the PCA testing set, we are given this confusion matrix.
   
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig1.png?raw=true)
+![Image of a confusion matrix table](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig1.png?raw=true)
 
 The confusion matrix shows the number of observations from class j that were classified as class i. From the confusion matrix, we can see that the model was most likely to misclassify class 6 as class 0, those being Shirt and Tshirt/Top respectively. This corresponds with the acc_table findings, which shows that only 46.50% of Shirts were correctly classified. This can also be seen with the large number of class 2 (Pullovers) observations being classified as class 4 (Coats). The OOB (Out of Bag) score is a method of estimating the testing accuracy of decision tree models. From the acc_table, the total accuracy is 78.94%. This differs from the OOB score which is 81%, which shows that the estimation is less accurate than the results. While the accuracy of the Random Forests is high, it clearly struggles with differentiating between classes that could be considered “similar”, leading to a slight decrease in total accuracy.
 
@@ -19,15 +20,15 @@ Quadratic Discriminant Analysis (QDA) is similar to LDA in that it reduces the d
 
 ### Comparison of Non-DL Models
 
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig2.png?raw=true)
+![Table of test accuracies of each model](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig2.png?raw=true)
 	
   Above is the total test accuracies of each of the models. Nonlinear SVM trained on the PCA data scored the highest, whereas QDA trained on the PCA data scored the lowest. In fact, it appears both versions of the SVM are more favorable when using the PCA data. 
 
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig3.png?raw=true)
+![Table breaking down the accuracies of both KNN models](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig3.png?raw=true)
 
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig4.png?raw=true)
+![Table breaking down the accuracies of linear and nonlinear SVMs](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig4.png?raw=true)
 
-![alt text](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig5.png?raw=true)
+![Table breaking down the accuracies of Random Forests, QDA, LDA models](https://github.com/cheft2026/STAT426-Final-Project/blob/main/stat426fig5.png?raw=true)
 
 The tables above show the individual breakdowns of the testing accuracies for each class. The easiest to predict classes for each model are class 1 (Trouser), class 8 (Bag) and class 9 (Ankle Boot). All of these classes scored above 90% for most models. On average, class 6 has the lowest accuracy at approximately 51.7%. This follows from the confusion matrix that was made with the decision trees, which showed that class 6 was most likely to be classified as class 0. Since class 6 is Shirts and class 0 is Tshirts/Tops, it would make sense that the models would struggle between differentiating a “Shirt” and a “Tshirt/Top”. This could be a result from the PCA data reducing dimensions, possibly eliminating the features that made the two classes more distinguishable. 
 Of the models, Nonlinear SVMs perform the best overall. While some models outperform Nonlinear SVMs for some classes, Nonlinear SVMs tend to be consistently more accurate. Random Forests can more accurately classify class 0 and class 9 than Nonlinear SVMs, but Nonlinear SVMs are more accurate for the rest. LDA has the highest testing accuracy for class 6 of all the models (51.7%), but compared to Nonlinear SVMs it performs significantly worse, especially when classifying class 2 (another class which was commonly misclassified). The training set given is highly variable and, even with applying PCA, still has 69 features. As such, opting for a training model that succeeds with highly variable data in higher dimensions is needed. Thus, Nonlinear SVMs would be the most appropriate choice, which the data shows.
